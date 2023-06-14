@@ -36,8 +36,8 @@ public class BTHandler {
     public static final int handlerState = 0;
 
     public boolean connect() {
-        String MAC_ADRESS_JONI = "98:D3:61:F9:3D:C7";
-        BluetoothDevice device = btAdapter.getRemoteDevice(MAC_ADRESS_JONI);
+        String MAC_ADRESS = "98:D3:61:F9:3D:C7";
+        BluetoothDevice device = btAdapter.getRemoteDevice(MAC_ADRESS);
 
         try {
             btSocket = device.createRfcommSocketToServiceRecord(BTMODULEUUID);

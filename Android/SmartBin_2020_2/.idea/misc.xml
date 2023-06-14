@@ -3,13 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Administrator/Desktop/SmartBin/Android/SmartBin_2020_2/app/src/main/res/layout/activity_main.xml" value="0.2988679352838745" />
+        <entry key="..\:/Users/Administrator/Desktop/SmartBin/Android/SmartBin_2020_2/app/src/main/res/layout/activity_mantenimiento.xml" value="0.2988679352838745" />
         <entry key="..\:/Users/Maxi/AndroidStudioProjects/SmartBin_2020_2/app/src/main/res/layout/activity_device_list.xml" value="0.3129528985507246" />
         <entry key="..\:/Users/Maxi/AndroidStudioProjects/SmartBin_2020_2/app/src/main/res/layout/activity_launcher.xml" value="0.3129528985507246" />
         <entry key="..\:/Users/Maxi/AndroidStudioProjects/SmartBin_2020_2/app/src/main/res/layout/activity_main.xml" value="0.33" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_13" default="true" project-jdk-name="Android Studio java home" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio java home" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

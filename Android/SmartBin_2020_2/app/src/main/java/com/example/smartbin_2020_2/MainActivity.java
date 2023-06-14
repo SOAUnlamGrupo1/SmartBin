@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private SensorManager mSensorManager;
     private ImageView ivLogo, ivConexion;
-    private Button btnConectar;
+    private Button btnConectar, buttonRealizarMantenimiento;
     private String estado = "desconectado";
     private BluetoothAdapter mBluetoothAdapter;
     private ProgressDialog mProgressDlg;
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         ivLogo = findViewById(R.id.ivLogo);
         ivConexion = findViewById(R.id.ivConexion);
         btnConectar = (Button) findViewById(R.id.btnConectar);
+        buttonRealizarMantenimiento = (Button) findViewById(R.id.button);
 
         // Accedemos al servicio de sensores
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -84,6 +85,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 else {
                     desconnect();
                 }
+            }
+        });
+
+        buttonRealizarMantenimiento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    callNextActivity();
+
             }
         });
     }
@@ -317,6 +327,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onResume();
 
         Ini_Sensores();
+    }
+
+    public void callNextActivity() {
+
+                // Cuando pasen los 3 segundos, pasamos a la actividad principal de la aplicación
+                Intent intent = new Intent(MainActivity.this,
+                        com.example.smartbin_2020_2.Mantenimiento.class);
+                startActivity(intent);
+                finish();
+
     }
 
 }
