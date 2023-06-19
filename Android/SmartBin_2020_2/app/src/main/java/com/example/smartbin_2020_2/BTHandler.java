@@ -36,7 +36,8 @@ public class BTHandler {
     public static final int handlerState = 0;
 
     public boolean connect() {
-        String MAC_ADRESS = "98:D3:61:F9:3D:C7";
+       // String MAC_ADRESS = "98:D3:61:F9:3D:C7";
+        String MAC_ADRESS = "B0:52:16:8C:F4:EE";
         BluetoothDevice device = btAdapter.getRemoteDevice(MAC_ADRESS);
 
         try {

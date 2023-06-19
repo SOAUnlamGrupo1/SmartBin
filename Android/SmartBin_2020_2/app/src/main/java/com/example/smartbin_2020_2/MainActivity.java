@@ -1,39 +1,28 @@
 package com.example.smartbin_2020_2;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -96,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             }
         });
+
+
+
+
     }
 
     public void setArduinoStatus(ArduinoStatus arduinoStatus) {
@@ -117,12 +110,24 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void showDialogConnect() {
+
+
         //primero verifico si el bluetooh esta habilitado, si no lo estoy pide que lo habilites
         if (!BTHandler.getInstance().isBluetoothEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, 1);
+
         } else
         {
+            tryConnect();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //metodo que cuando recibe que me conecte al bluetooh, trata de conectarse al arduino
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
             tryConnect();
         }
     }
@@ -331,7 +336,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     public void callNextActivity() {
 
-                // Cuando pasen los 3 segundos, pasamos a la actividad principal de la aplicación
                 Intent intent = new Intent(MainActivity.this,
                         com.example.smartbin_2020_2.Mantenimiento.class);
                 startActivity(intent);
