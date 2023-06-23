@@ -6,8 +6,13 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,9 +29,10 @@ import java.util.UUID;
  **********************************************************************************************************/
 
 //******************************************** Hilo principal del Activity**************************************
-public class activity_comunicacion extends Activity
+public class activity_comunicacion extends Activity implements SensorEventListener
 {
-
+    private SensorManager mSensorManager;
+    Boolean fondo_original=true;
     Button btnApagar;
     Button btnEncender;
     TextView txtValorLleno, txtValorTapa, txtValorLiquido, txtValorMantenimiento,
@@ -55,7 +61,8 @@ public class activity_comunicacion extends Activity
         setContentView(R.layout.activity_comunicacion);
         getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 
-
+        // Accedemos al servicio de sensores
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         //Se definen los componentes del layout
         btnApagar=(Button)findViewById(R.id.btnApagar);
@@ -90,6 +97,7 @@ public class activity_comunicacion extends Activity
     //socketBluethoot
     public void onResume() {
         super.onResume();
+        Ini_Sensores();
 
         //Obtengo el parametro, aplicando un Bundle, que me indica la Mac Adress del HC05
         Intent intent=getIntent();
@@ -132,7 +140,8 @@ public class activity_comunicacion extends Activity
 
         //I send a character when resuming.beginning transmission to check device is connected
         //If it is not an exception will be thrown in the write method and finish() will be called
-        mConnectedThread.write("x");
+
+        mConnectedThread.write("x\r");
     }
 
 
@@ -140,6 +149,7 @@ public class activity_comunicacion extends Activity
     //Cuando se ejecuta el evento onPause se cierra el socket Bluethoot, para no recibiendo datos
     public void onPause()
     {
+        Parar_Sensores();
         super.onPause();
         try
         {
@@ -148,6 +158,29 @@ public class activity_comunicacion extends Activity
         } catch (IOException e2) {
             //insert code to deal with this
         }
+    }
+
+    @Override
+    protected void onRestart()
+    {
+        Ini_Sensores();
+
+        super.onRestart();
+    }
+
+
+
+    // Metodo para iniciar el acceso a los sensores
+    protected void Ini_Sensores()
+    {
+        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),   SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    // Metodo para parar la escucha de los sensores
+    private void Parar_Sensores()
+    {
+
+        mSensorManager.unregisterListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
     }
 
     //Metodo que crea el socket bluethoot
@@ -179,57 +212,57 @@ public class activity_comunicacion extends Activity
                             String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
                             txtValorTapa.setText(dataInPrint);
 
-                            //recDataString.delete(0, recDataString.length());
+                            recDataString.delete(0, recDataString.length());
                         }
                         else if (recDataString.toString().contains("LIQUIDO|")) {
                             String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
                             txtValorLiquido.setText(dataInPrint);
 
-                            // recDataString.delete(0, recDataString.length());
+                             recDataString.delete(0, recDataString.length());
                         }
                         else if (recDataString.toString().contains("LLENO|")) {
                             String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
                             txtValorLleno.setText(dataInPrint);
 
-                            //recDataString.delete(0, recDataString.length());
+                            recDataString.delete(0, recDataString.length());
                         }
                         else if (recDataString.toString().contains("MANTENIMIENTO|")) {
                             String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
                             txtValorMantenimiento.setText(dataInPrint);
 
-                            //recDataString.delete(0, recDataString.length());
+                            recDataString.delete(0, recDataString.length());
                         }
                         else if (recDataString.toString().contains("HUMEDAD|")) {
                             String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
                             txtValorHumedad.setText("HUMEDAD "+dataInPrint+" %");
 
-                            //recDataString.delete(0, recDataString.length());
+                            recDataString.delete(0, recDataString.length());
                         }
                         else if (recDataString.toString().contains("CAPACIDAD|")) {
                             String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
                             txtValorCapacidad.setText("CAPACIDAD AL "+dataInPrint+" %");
 
-                            // recDataString.delete(0, recDataString.length());
+                             recDataString.delete(0, recDataString.length());
                         }
                         else if (recDataString.toString().contains("INICIAR_MANTENIMIENTO")) { //habilita boton iniciar mantenimiento
                             btnEncender.setEnabled(true);
                             ivStatus.setImageResource(R.drawable.error);
                             txtEstadoGeneral.setText("ESTADO: EN MANTENIMIENTO");
-                            // recDataString.delete(0, recDataString.length());
+                             recDataString.delete(0, recDataString.length());
                         }
                         else if (recDataString.toString().contains("FINALIZAR_MANTENIMIENTO")) { //habilita boton finalizar mantenimiento
                             //btnEncender.setEnabled(false);
                             btnApagar.setEnabled(true);
 
-                            //recDataString.delete(0, recDataString.length());
+                            recDataString.delete(0, recDataString.length());
                         }
 
-                        //else {
+                        else {
                             //String dataInPrint = recDataString.substring(0, endOfLineIndex);
                            // txtPotenciometro.setText(dataInPrint);
 
                             recDataString.delete(0, recDataString.length());
-                        //}
+                        }
                     }
                 }
             }
@@ -241,7 +274,7 @@ public class activity_comunicacion extends Activity
     private View.OnClickListener btnEncenderListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mConnectedThread.write("a");    // Send "1" via Bluetooth
+            mConnectedThread.write("a\r");    // Send "1" via Bluetooth
             showToast("Se abre la tapa");
             btnEncender.setEnabled(false);
             //btnApagar.setEnabled(true);
@@ -253,7 +286,7 @@ public class activity_comunicacion extends Activity
     private View.OnClickListener btnApagarListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mConnectedThread.write("b");    // Send "0" via Bluetooth
+            mConnectedThread.write("b\r");    // Send "0" via Bluetooth
             showToast("Se cierra la tapa");
             btnApagar.setEnabled(false);
             ivStatus.setImageResource(R.drawable.checked);
@@ -264,6 +297,61 @@ public class activity_comunicacion extends Activity
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+    // Metodo que escucha el cambio de los sensores
+
+
+    @Override
+    protected void onStop()
+    {
+
+        Parar_Sensores();
+
+        super.onStop();
+    }
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        String txt = "";
+
+        // Cada sensor puede lanzar un thread que pase por aqui
+        // Para asegurarnos ante los accesos simult�neos sincronizamos esto
+
+        synchronized (this) {
+            Log.d("sensor", event.sensor.getName());
+
+            switch (event.sensor.getType()) {
+                case Sensor.TYPE_ACCELEROMETER:
+                    if ((event.values[0] > 15) || (event.values[1] > 15) || (event.values[2] > 15)) {
+                        Toast.makeText(this, "Se ha cambiado el fondo de pantalla", Toast.LENGTH_SHORT).show();
+                        if (fondo_original == true) {
+                            getWindow().getDecorView().setBackgroundColor(Color.LTGRAY);
+                            fondo_original = false;
+                        }
+                        else
+                        {
+                            getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+                            fondo_original = true;
+                        }
+                    }
+                    break;
+
+
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        Parar_Sensores();
+        // unregisterReceiver(mReceiver);
+        super.onDestroy();
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
     }
 
     //******************************************** Hilo secundario del Activity**************************************
