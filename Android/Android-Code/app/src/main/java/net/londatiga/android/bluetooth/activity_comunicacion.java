@@ -274,7 +274,7 @@ public class activity_comunicacion extends Activity implements SensorEventListen
     private View.OnClickListener btnEncenderListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mConnectedThread.write("a\r");    // Send "1" via Bluetooth
+            mConnectedThread.write("a");    // Send "1" via Bluetooth
             showToast("Se abre la tapa");
             btnEncender.setEnabled(false);
             //btnApagar.setEnabled(true);
@@ -286,7 +286,7 @@ public class activity_comunicacion extends Activity implements SensorEventListen
     private View.OnClickListener btnApagarListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mConnectedThread.write("b\r");    // Send "0" via Bluetooth
+            mConnectedThread.write("b");    // Send "0" via Bluetooth
             showToast("Se cierra la tapa");
             btnApagar.setEnabled(false);
             ivStatus.setImageResource(R.drawable.checked);
