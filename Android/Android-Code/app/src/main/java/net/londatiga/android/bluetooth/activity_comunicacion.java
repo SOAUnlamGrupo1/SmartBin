@@ -71,7 +71,7 @@ public class activity_comunicacion extends Activity implements SensorEventListen
         txtValorLiquido=(TextView)findViewById(R.id.txtValorLiquido);
         txtValorLleno=(TextView)findViewById(R.id.txtValorLleno);
         txtValorMantenimiento=(TextView)findViewById(R.id.txtValorMantenimiento);
-        txtValorHumedad=(TextView)findViewById(R.id.txtValorHumedad);
+        //txtValorHumedad=(TextView)findViewById(R.id.txtValorHumedad);
         txtValorCapacidad=(TextView)findViewById(R.id.txtValorCapacidad);
         ivStatus = findViewById(R.id.ivStatus);
         txtEstadoGeneral=(TextView)findViewById(R.id.txtEstadoGeneral);
@@ -232,12 +232,12 @@ public class activity_comunicacion extends Activity implements SensorEventListen
 
                             recDataString.delete(0, recDataString.length());
                         }
-                        else if (recDataString.toString().contains("HUMEDAD|")) {
+                        /*else if (recDataString.toString().contains("HUMEDAD|")) {
                             String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
                             txtValorHumedad.setText("HUMEDAD "+dataInPrint+" %");
 
                             recDataString.delete(0, recDataString.length());
-                        }
+                        }*/
                         else if (recDataString.toString().contains("CAPACIDAD|")) {
                             String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
                             txtValorCapacidad.setText("CAPACIDAD AL "+dataInPrint+" %");
