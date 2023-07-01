@@ -1,4 +1,3 @@
-//#include <LiquidCrystal_I2C.h>
 #include <Servo.h>
 #include "rgb_lcd.h"
 #include <Wire.h>
