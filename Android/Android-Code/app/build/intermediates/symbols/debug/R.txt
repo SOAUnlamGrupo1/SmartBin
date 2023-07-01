@@ -173,12 +173,11 @@ int id txtEstado 0x7f060041
 int id txtEstadoGeneral 0x7f060042
 int id txtTapaAbierta 0x7f060043
 int id txtValorCapacidad 0x7f060044
-int id txtValorHumedad 0x7f060045
-int id txtValorLiquido 0x7f060046
-int id txtValorLleno 0x7f060047
-int id txtValorMantenimiento 0x7f060048
-int id txtValorTapa 0x7f060049
-int id wrap 0x7f06004a
+int id txtValorLiquido 0x7f060045
+int id txtValorLleno 0x7f060046
+int id txtValorMantenimiento 0x7f060047
+int id txtValorTapa 0x7f060048
+int id wrap 0x7f060049
 int integer cancel_button_image_alpha 0x7f070000
 int integer status_bar_notification_info_maxnum 0x7f070001
 int layout activity_comunicacion 0x7f080000

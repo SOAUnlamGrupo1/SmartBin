@@ -291,7 +291,7 @@ void display()
 			
 			char msj[5];
 			strcpy(settings_data,"CAPACIDAD|");
-			strcat(settings_data, itoa(100-(int(sensores[SENSOR_PROXIMIDAD_TAPA].distancia*2)),msj,10));
+			strcat(settings_data, itoa(100-(int(sensores[SENSOR_PROXIMIDAD_TAPA].distancia*5)),msj,10));
 			strcat(settings_data, "\r");
 				
 			BT.write(settings_data);
@@ -713,14 +713,6 @@ void maquina_estados( )
 			case TIPO_EVENTO_CONTINUE:
 			{
 				
-				char settings_data[100];
-
-				char msj[5];
-				strcpy(settings_data,"CAPACIDAD|");
-				strcat(settings_data, itoa(100-(int(sensores[SENSOR_PROXIMIDAD_TAPA].distancia*2)),msj,10));
-				strcat(settings_data, "\r");
-					
-				BT.write(settings_data);
 				
 				estado = ESTADO_EMBEDDED_CERRADO;
 				

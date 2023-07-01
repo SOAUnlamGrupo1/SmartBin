@@ -633,12 +633,11 @@ public final class R {
     public static final int txtEstadoGeneral=0x7f060042;
     public static final int txtTapaAbierta=0x7f060043;
     public static final int txtValorCapacidad=0x7f060044;
-    public static final int txtValorHumedad=0x7f060045;
-    public static final int txtValorLiquido=0x7f060046;
-    public static final int txtValorLleno=0x7f060047;
-    public static final int txtValorMantenimiento=0x7f060048;
-    public static final int txtValorTapa=0x7f060049;
-    public static final int wrap=0x7f06004a;
+    public static final int txtValorLiquido=0x7f060045;
+    public static final int txtValorLleno=0x7f060046;
+    public static final int txtValorMantenimiento=0x7f060047;
+    public static final int txtValorTapa=0x7f060048;
+    public static final int wrap=0x7f060049;
   }
   public static final class integer {
     public static final int cancel_button_image_alpha=0x7f070000;

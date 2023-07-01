@@ -9,6 +9,8 @@ rgb_lcd lcd;
 const int colorR = 255;
 const int colorG = 100;
 const int colorB = 255;
+char settings_data[100];
+char msj[5];
 
 //----------------------------------------------
 //  constantes
@@ -238,6 +240,15 @@ void display()
         lcd.print("AGUA:N ABIERTO:S");
       lcd.setCursor(0, 1);
       lcd.print("MANT:N LLENO:N");
+
+       settings_data[0]='\0';
+      strcpy(settings_data,"LIQUIDO:NO|ABIERTO:SI|MANTENIMIENTO:NO|LLENO:NO\r");       
+      BT.write(settings_data);
+      
+      settings_data[0]='\0';
+      
+
+
     }
     break;
 
@@ -247,6 +258,28 @@ void display()
             lcd.print("AGUA:N ABIERTO:N");
       lcd.setCursor(0, 1);
             lcd.print("MANT:N LLENO:N");
+
+msj[0]='\0'; 
+      settings_data[0]='\0';
+      strcpy(settings_data,"LIQUIDO:NO|ABIERTO:NO|MANTENIMIENTO:NO|LLENO:NO|"); 
+      strcat(settings_data,"CAPACIDAD:");
+      strcat(settings_data, itoa(100-(int(sensores[SENSOR_PROXIMIDAD_TAPA].distancia*5)),msj,10));
+      strcat(settings_data, "\r");      
+      BT.write(settings_data);
+      
+settings_data[0]='\0';  
+msj[0]='\0';     
+      
+
+          /*  char msj[5];
+      strcpy(settings_data,"CAPACIDAD|");
+      strcat(settings_data, itoa(100-(int(sensores[SENSOR_PROXIMIDAD_TAPA].distancia*2)),msj,10));
+      strcat(settings_data, "\r");
+        
+      BT.write(settings_data);
+      msj[0]='\0'; 
+      */
+      
     }
     break;
 
@@ -256,6 +289,14 @@ void display()
             lcd.print("AGUA:N ABIERTO:N");
       lcd.setCursor(0, 1);
             lcd.print("MANT:S LLENO:S");
+
+                  settings_data[0]='\0';
+      strcpy(settings_data,"LIQUIDO:NO|ABIERTO:NO|MANTENIMIENTO:SI|LLENO:SI\r");       
+      BT.write(settings_data);
+      
+settings_data[0]='\0';      
+      
+
     }
     break;
 
@@ -265,6 +306,14 @@ void display()
             lcd.print("AGUA:S ABIERTO:N");
       lcd.setCursor(0, 1);
             lcd.print("MANT:S LLENO:N");
+
+                  settings_data[0]='\0';
+      strcpy(settings_data,"LIQUIDO:SI|ABIERTO:NO|MANTENIMIENTO:SI|LLENO:NO\r");       
+      BT.write(settings_data);
+      
+settings_data[0]='\0';      
+      
+
     }
     break;
 
@@ -274,6 +323,14 @@ void display()
         lcd.print("AGUA:N ABIERTO:S");
       lcd.setCursor(0, 1);
       lcd.print("MANT:S LLENO:N");
+
+           settings_data[0]='\0';
+      strcpy(settings_data,"LIQUIDO:NO|ABIERTO:SI|MANTENIMIENTO:SI|LLENO:NO\r");       
+      BT.write(settings_data);
+      
+settings_data[0]='\0';      
+      
+
     }
     break;
 
@@ -283,6 +340,18 @@ void display()
         lcd.print("AGUA:N ABIERTO:N");
       lcd.setCursor(0, 1);
       lcd.print("MANT:N LLENO:N");
+
+msj[0]='\0'; 
+            settings_data[0]='\0';
+      strcpy(settings_data,"LIQUIDO:NO|ABIERTO:NO|MANTENIMIENTO:NO|LLENO:NO|\r");  
+      strcat(settings_data,"CAPACIDAD:");
+      strcat(settings_data, itoa(100-(int(sensores[SENSOR_PROXIMIDAD_TAPA].distancia*5)),msj,10));
+      strcat(settings_data, "\r");     
+      BT.write(settings_data);
+      
+settings_data[0]='\0';      
+   msj[0]='\0';    
+
     }
     break;
   }
@@ -516,16 +585,11 @@ void maquina_estados( )
 
         display();
 
-        char msj[5];
-        char settings_data[100];
-
-        //strcpy(settings_data,"valor sensor ultrasonido (tapa): ");
-        //strcat(settings_data, itoa(sensores[SENSOR_PROXIMIDAD_TAPA].distancia,msj,10));
-        //strcat(settings_data, "\n");
         
-        strcpy(settings_data,"INICIAR_MANTENIMIENTO\r");
+        settings_data[0]='\0';
+        strcpy(settings_data,"INICIAR_MANTENIMIENTO|\r");
         BT.write(settings_data);
-        //BT.write(itoa(sensores[SENSOR_PROXIMIDAD_TAPA].distancia,msj,10));
+        settings_data[0]='\0';
 
         estado = ESTADO_EMBEDDED_BLOQUEADO;
       }
@@ -541,6 +605,14 @@ void maquina_estados( )
         display();
 
         Serial.println("Ingrese 'a' para abrir el tacho y hacer el mantenimiento:");
+
+                
+      settings_data[0]='\0';
+        strcpy(settings_data,"INICIAR_MANTENIMIENTO|\r");
+        
+        BT.write(settings_data);
+        settings_data[0]='\0';
+        
         estado = ESTADO_EMBEDDED_BLOQUEADO;
       }
       break;
@@ -643,15 +715,11 @@ void maquina_estados( )
 
         Serial.println("Ingrese 'b' para cerrar el tacho y finalizar el mantenimiento:");
 
-        char msj[5];
-        char settings_data[100];
-
-        //strcpy(settings_data,"valor sensor ultrasonido (tapa): ");
-        //strcat(settings_data, itoa(sensores[SENSOR_PROXIMIDAD_TAPA].distancia,msj,10));
-        //strcat(settings_data, "\n");
         
-        strcpy(settings_data,"FINALIZAR_MANTENIMIENTO\r");
+        settings_data[0]='\0';
+        strcpy(settings_data,"FINALIZAR_MANTENIMIENTO|\r");
         BT.write(settings_data);
+        settings_data[0]='\0';
 
         mover_servo(POS_ABIERTO);
         estado = ESTADO_EMBEDDED_ABIERTO_MANTENIMIENTO;

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /*********************************************************************************************************
  * Activity que muestra realiza la comunicacion con Arduino
@@ -205,9 +206,51 @@ public class activity_comunicacion extends Activity implements SensorEventListen
                     //int endOfLineIndex = recDataString.indexOf("\r\n"); // ASI USAR CON ARDUINO POSTA
 
                     //cuando recibo toda una linea la muestro en el layout
-                    if (endOfLineIndex > 0)
-                    {
+                    if (endOfLineIndex > 0) {
+                        String msj = recDataString.substring(0, recDataString.indexOf("\r"));
 
+                        String vector[] = msj.split("\\|");
+
+                        for (int i = 0; i < vector.length; i++) {
+
+                            if (vector[i].contains("ABIERTO")) {
+                                String dataInPrint = vector[i].substring(vector[i].indexOf(":") + 1, vector[i].length()); //si o NO
+                                txtValorTapa.setText(dataInPrint);
+                            }
+                            else if (vector[i].contains("LIQUIDO")) {
+                                String dataInPrint = vector[i].substring(vector[i].indexOf(":")+1, vector[i].length()); //si o NO
+                                txtValorLiquido.setText(dataInPrint);
+                            }
+                            else if (vector[i].contains("LLENO")) {
+                                String dataInPrint = vector[i].substring(vector[i].indexOf(":")+1, vector[i].length()); //si o NO
+                                txtValorLleno.setText(dataInPrint);
+                            }
+
+                            else if (vector[i].contains("INICIAR_MANTENIMIENTO")) { //habilita boton iniciar mantenimiento
+                                btnEncender.setEnabled(true);
+                                ivStatus.setImageResource(R.drawable.error);
+                                txtEstadoGeneral.setText("ESTADO: EN MANTENIMIENTO");
+                            }
+                            else if (vector[i].contains("FINALIZAR_MANTENIMIENTO")) { //habilita boton finalizar mantenimiento
+                                //btnEncender.setEnabled(false);
+                                btnApagar.setEnabled(true);
+                            }
+                            else if (vector[i].contains("MANTENIMIENTO") &&
+                                    !(vector[i].contains("INICIAR_MANTENIMIENTO")) &&
+                                    !(vector[i].contains("FINALIZAR_MANTENIMIENTO"))) {
+                                String dataInPrint = vector[i].substring(vector[i].indexOf(":")+1, vector[i].length()); //si o NO
+                                txtValorMantenimiento.setText(dataInPrint);
+                            }
+                            else if (vector[i].contains("CAPACIDAD")) {
+                                String dataInPrint = vector[i].substring(vector[i].indexOf(":")+1, vector[i].length()); //si o NO
+                                txtValorCapacidad.setText("CAPACIDAD AL "+dataInPrint+" %");
+                            }
+
+
+                        }
+                        recDataString.delete(0, recDataString.length());
+                    }
+/*
                         if (recDataString.toString().contains("ABIERTO|")) {
                             String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
                             txtValorTapa.setText(dataInPrint);
@@ -232,12 +275,14 @@ public class activity_comunicacion extends Activity implements SensorEventListen
 
                             recDataString.delete(0, recDataString.length());
                         }
+                        */
                         /*else if (recDataString.toString().contains("HUMEDAD|")) {
                             String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
                             txtValorHumedad.setText("HUMEDAD "+dataInPrint+" %");
 
                             recDataString.delete(0, recDataString.length());
                         }*/
+                        /*
                         else if (recDataString.toString().contains("CAPACIDAD|")) {
                             String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
                             txtValorCapacidad.setText("CAPACIDAD AL "+dataInPrint+" %");
@@ -263,7 +308,10 @@ public class activity_comunicacion extends Activity implements SensorEventListen
 
                             recDataString.delete(0, recDataString.length());
                         }
-                    }
+                        */
+
+
+
                 }
             }
         };

@@ -40,16 +40,16 @@
         "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\698aa02e3959bee2f479105d3676ed74\\res\\drawable-hdpi-v4\\notify_panel_notification_icon_bg.png"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\Android-Code\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_big_media.xml.flat",
-        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\422ccf423737a75b43001f2b47bf80da\\res\\layout\\notification_template_big_media.xml"
+        "merged": "C:\\Users\\Administrator\\Desktop\\Android-Code\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\Administrator\\Desktop\\Android-Code\\app\\src\\main\\res\\layout\\activity_main.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\Android-Code\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_action.xml.flat",
         "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\698aa02e3959bee2f479105d3676ed74\\res\\layout\\notification_action.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\Android-Code\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
-        "source": "C:\\Users\\Administrator\\Desktop\\Android-Code\\app\\src\\main\\res\\layout\\activity_main.xml"
+        "merged": "C:\\Users\\Administrator\\Desktop\\Android-Code\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_big_media.xml.flat",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\422ccf423737a75b43001f2b47bf80da\\res\\layout\\notification_template_big_media.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\Android-Code\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_fondo.jpg.flat",
