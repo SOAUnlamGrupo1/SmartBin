@@ -50,8 +50,8 @@ char msj[5];
 // Estado del embeded ...
 enum estado_e
 {
-    ESTADO_EMBEDDED_INIT,
-    ESTADO_EMBEDDED_CERRADO,
+  ESTADO_EMBEDDED_INIT,
+  ESTADO_EMBEDDED_CERRADO,
   ESTADO_EMBEDDED_ABIERTO,
   ESTADO_EMBEDDED_BLOQUEADO,
   ESTADO_EMBEDDED_ABIERTO_MANTENIMIENTO
@@ -71,14 +71,14 @@ enum estado_sensores
 // Tipos de eventos disponibles .
 enum evento_e
 {
-    TIPO_EVENTO_CONTINUE,
-    TIPO_EVENTO_TIMEOUT,
-    TIPO_EVENTO_TAPA_ABIERTA,
-    TIPO_EVENTO_TAPA_CERRADA,
+  TIPO_EVENTO_CONTINUE,
+  TIPO_EVENTO_TIMEOUT,
+  TIPO_EVENTO_TAPA_ABIERTA,
+  TIPO_EVENTO_TAPA_CERRADA,
   TIPO_EVENTO_CAPACIDAD_TACHO_LLENO,
   TIPO_EVENTO_ABRIR_MANTENIMIENTO,
   TIPO_EVENTO_CERRAR_MANTENIMIENTO,
-    TIPO_EVENTO_HAY_AGUA
+  TIPO_EVENTO_HAY_AGUA
   
 };
 //----------------------------------------------
@@ -133,7 +133,6 @@ estado_e estado;
 stEvento evento;
 int estadoBluetooth;
 stInfrarrojo sensorInfrarrojo;
-//LiquidCrystal_I2C lcd(0x20,16,2);
 //----------------------------------------------
 
 char leerBluetooth()
@@ -188,19 +187,18 @@ void mover_servo(int pos)
 void do_init()
 {
   Serial.begin(9600);
-    BT.begin(9600);       // Inicializamos el puerto serie BT (Para Modo AT 2)
-  //lcd.init();
-  //lcd.backlight();
+  BT.begin(9600);
+
   lcd.begin(16, 2);
   lcd.setRGB(colorR, colorG, colorB);
   
   sensores[SENSOR_PROXIMIDAD_TAPA].trigPin = PIN_D_SENSOR_ULTRASONIDO_1_TRIGGER;
   sensores[SENSOR_PROXIMIDAD_TAPA].echoPin = PIN_D_SENSOR_ULTRASONIDO_1_ECHO;
-  sensores[SENSOR_PROXIMIDAD_TAPA].estado = ESTADO_SENSOR_OFF;
+  sensores[SENSOR_PROXIMIDAD_TAPA].estado  = ESTADO_SENSOR_OFF;
   
   sensoresH[SENSOR_HUMEDAD].humedad = humedad;
-  sensoresH[SENSOR_HUMEDAD].signal = PIN_A_SENSOR_HUMEDAD;
-  sensoresH[SENSOR_HUMEDAD].estado = ESTADO_SENSOR_OFF;
+  sensoresH[SENSOR_HUMEDAD].signal  = PIN_A_SENSOR_HUMEDAD;
+  sensoresH[SENSOR_HUMEDAD].estado  = ESTADO_SENSOR_OFF;
   
   estadoBluetooth = ESTADO_SENSOR_OFF;
   
@@ -208,14 +206,14 @@ void do_init()
   servo.write(POS_INICIAL);
   
   sensorInfrarrojo.valor = 0;
-  sensorInfrarrojo.state= PRESENCIA_NO_DETECTADA;
+  sensorInfrarrojo.state = PRESENCIA_NO_DETECTADA;
   sensorInfrarrojo.valor_antiguo = 0;
   sensorInfrarrojo.estado = ESTADO_SENSOR_OFF;
   
   pinMode(PIN_D_SENSOR_INFRARROJO_1,INPUT);
   
-   // Inicializo el evento inicial
-  estado = ESTADO_EMBEDDED_INIT;
+  //Inicializo el evento inicial
+  estado  = ESTADO_EMBEDDED_INIT;
   timeout = false;
   lct     = millis();
 }
@@ -227,8 +225,8 @@ void display()
   {
     case(TIPO_EVENTO_CONTINUE):
     {
-        lcd.setCursor(0, 0);
-        lcd.print("AGUA:N ABIERTO:N");
+      lcd.setCursor(0, 0);
+      lcd.print("AGUA:N ABIERTO:N");
       lcd.setCursor(0, 1);
       lcd.print("MANT:N LLENO:N");
     }
@@ -236,30 +234,27 @@ void display()
 
     case(TIPO_EVENTO_TAPA_ABIERTA):
     {
-        lcd.setCursor(0, 0);
-        lcd.print("AGUA:N ABIERTO:S");
+      lcd.setCursor(0, 0);
+      lcd.print("AGUA:N ABIERTO:S");
       lcd.setCursor(0, 1);
       lcd.print("MANT:N LLENO:N");
 
-       settings_data[0]='\0';
+      settings_data[0]='\0';
       strcpy(settings_data,"LIQUIDO:NO|ABIERTO:SI|MANTENIMIENTO:NO|LLENO:NO\r");       
       BT.write(settings_data);
       
       settings_data[0]='\0';
-      
-
-
     }
     break;
 
     case(TIPO_EVENTO_TAPA_CERRADA):
     {
-        lcd.setCursor(0, 0);
-            lcd.print("AGUA:N ABIERTO:N");
+      lcd.setCursor(0, 0);
+      lcd.print("AGUA:N ABIERTO:N");
       lcd.setCursor(0, 1);
-            lcd.print("MANT:N LLENO:N");
+      lcd.print("MANT:N LLENO:N");
 
-msj[0]='\0'; 
+      msj[0]='\0'; 
       settings_data[0]='\0';
       strcpy(settings_data,"LIQUIDO:NO|ABIERTO:NO|MANTENIMIENTO:NO|LLENO:NO|"); 
       strcat(settings_data,"CAPACIDAD:");
@@ -267,117 +262,101 @@ msj[0]='\0';
       strcat(settings_data, "\r");      
       BT.write(settings_data);
       
-settings_data[0]='\0';  
-msj[0]='\0';     
-      
-
-          /*  char msj[5];
-      strcpy(settings_data,"CAPACIDAD|");
-      strcat(settings_data, itoa(100-(int(sensores[SENSOR_PROXIMIDAD_TAPA].distancia*2)),msj,10));
-      strcat(settings_data, "\r");
-        
-      BT.write(settings_data);
-      msj[0]='\0'; 
-      */
+      settings_data[0]='\0';  
+      msj[0]='\0';     
       
     }
     break;
 
     case(TIPO_EVENTO_CAPACIDAD_TACHO_LLENO):
     {
-        lcd.setCursor(0, 0);
-            lcd.print("AGUA:N ABIERTO:N");
+      lcd.setCursor(0, 0);
+      lcd.print("AGUA:N ABIERTO:N");
       lcd.setCursor(0, 1);
-            lcd.print("MANT:S LLENO:S");
+      lcd.print("MANT:S LLENO:S");
 
-                  settings_data[0]='\0';
+      settings_data[0]='\0';
       strcpy(settings_data,"LIQUIDO:NO|ABIERTO:NO|MANTENIMIENTO:SI|LLENO:SI\r");       
       BT.write(settings_data);
       
-settings_data[0]='\0';      
-      
-
+      settings_data[0]='\0';      
     }
     break;
 
     case(TIPO_EVENTO_HAY_AGUA):
     {
-        lcd.setCursor(0, 0);
-            lcd.print("AGUA:S ABIERTO:N");
+      lcd.setCursor(0, 0);
+      lcd.print("AGUA:S ABIERTO:N");
       lcd.setCursor(0, 1);
-            lcd.print("MANT:S LLENO:N");
+      lcd.print("MANT:S LLENO:N");
 
-                  settings_data[0]='\0';
+      settings_data[0]='\0';
       strcpy(settings_data,"LIQUIDO:SI|ABIERTO:NO|MANTENIMIENTO:SI|LLENO:NO\r");       
       BT.write(settings_data);
       
-settings_data[0]='\0';      
-      
-
+      settings_data[0]='\0';      
     }
     break;
 
     case(TIPO_EVENTO_ABRIR_MANTENIMIENTO):
     {
-        lcd.setCursor(0, 0);
-        lcd.print("AGUA:N ABIERTO:S");
+      lcd.setCursor(0, 0);
+      lcd.print("AGUA:N ABIERTO:S");
       lcd.setCursor(0, 1);
       lcd.print("MANT:S LLENO:N");
 
-           settings_data[0]='\0';
+      settings_data[0]='\0';
       strcpy(settings_data,"LIQUIDO:NO|ABIERTO:SI|MANTENIMIENTO:SI|LLENO:NO\r");       
       BT.write(settings_data);
       
-settings_data[0]='\0';      
-      
-
+      settings_data[0]='\0';      
     }
     break;
 
     case(TIPO_EVENTO_CERRAR_MANTENIMIENTO):
     {
-        lcd.setCursor(0, 0);
-        lcd.print("AGUA:N ABIERTO:N");
+      lcd.setCursor(0, 0);
+      lcd.print("AGUA:N ABIERTO:N");
       lcd.setCursor(0, 1);
       lcd.print("MANT:N LLENO:N");
 
-msj[0]='\0'; 
-            settings_data[0]='\0';
+      msj[0]='\0'; 
+      settings_data[0]='\0';
       strcpy(settings_data,"LIQUIDO:NO|ABIERTO:NO|MANTENIMIENTO:NO|LLENO:NO|\r");  
       strcat(settings_data,"CAPACIDAD:");
       strcat(settings_data, itoa(100-(int(sensores[SENSOR_PROXIMIDAD_TAPA].distancia*5)),msj,10));
       strcat(settings_data, "\r");     
       BT.write(settings_data);
       
-settings_data[0]='\0';      
-   msj[0]='\0';    
-
+      settings_data[0]='\0';      
+      msj[0]='\0';    
     }
     break;
   }
-
-
 }
 
 bool verificarEstadoBluetooth()
 {
   char comando = leerBluetooth();
 
-if (sensorInfrarrojo.estado == ESTADO_SENSOR_OFF && (sensores[SENSOR_PROXIMIDAD_TAPA].estado == ESTADO_SENSOR_ON || sensoresH[SENSOR_HUMEDAD].estado == ESTADO_SENSOR_ON))
-{
-  if (comando == 'a')
+  if (
+      sensorInfrarrojo.estado == ESTADO_SENSOR_OFF &&
+      (sensores[SENSOR_PROXIMIDAD_TAPA].estado == ESTADO_SENSOR_ON || sensoresH[SENSOR_HUMEDAD].estado == ESTADO_SENSOR_ON)
+      )
   {
-    evento.tipo=TIPO_EVENTO_ABRIR_MANTENIMIENTO;
-    estadoBluetooth=ESTADO_SENSOR_ON;
-    return true;
-  }
-  else if (comando == 'b')
-  {
+    if (comando == 'a')
+    {
+      evento.tipo=TIPO_EVENTO_ABRIR_MANTENIMIENTO;
+      estadoBluetooth=ESTADO_SENSOR_ON;
+      return true;
+    }
+    else if (comando == 'b')
+    {
       evento.tipo=TIPO_EVENTO_CERRAR_MANTENIMIENTO;
       estadoBluetooth=ESTADO_SENSOR_OFF;
       return true;    
+    }
   }
-}
 
   return false; 
 }
@@ -387,15 +366,15 @@ bool verificarEstadoSensorHumedad()
   sensoresH[SENSOR_HUMEDAD].humedad = leer_sensor_humedad( sensoresH[SENSOR_HUMEDAD].signal);
   int humedad = sensoresH[SENSOR_HUMEDAD].humedad;  
    
-   if (estadoBluetooth==ESTADO_SENSOR_OFF){
-    if(sensoresH[SENSOR_HUMEDAD].humedad <= UMBRAL_HUMEDAD
-      && sensorInfrarrojo.estado == ESTADO_SENSOR_OFF
-
+   if (estadoBluetooth==ESTADO_SENSOR_OFF)
+   {
+    if( sensoresH[SENSOR_HUMEDAD].humedad <= UMBRAL_HUMEDAD  &&
+        sensorInfrarrojo.estado == ESTADO_SENSOR_OFF
       ) //detecta humedad solo con la tapa cerrada
     {
       evento.tipo  = TIPO_EVENTO_HAY_AGUA;
       evento.param1 = SENSOR_HUMEDAD;
-            evento.param2 = humedad;
+      evento.param2 = humedad;
       sensoresH[SENSOR_HUMEDAD].estado = ESTADO_SENSOR_ON;
       estadoBluetooth=ESTADO_SENSOR_ON;
       
@@ -411,20 +390,22 @@ bool verificarEstadoSensorHumedad()
 
 bool verificarEstadoSensorUltrasonidoTapa()
 {
-  sensores[SENSOR_PROXIMIDAD_TAPA].distancia = leer_sensor_distancia( sensores[SENSOR_PROXIMIDAD_TAPA].trigPin, sensores[SENSOR_PROXIMIDAD_TAPA].echoPin);
+  sensores[SENSOR_PROXIMIDAD_TAPA].distancia = leer_sensor_distancia( sensores[SENSOR_PROXIMIDAD_TAPA].trigPin,
+                                                                      sensores[SENSOR_PROXIMIDAD_TAPA].echoPin);
   
   int cm = sensores[SENSOR_PROXIMIDAD_TAPA].distancia;
     
-if (estadoBluetooth==ESTADO_SENSOR_OFF){
-    if( (sensores[SENSOR_PROXIMIDAD_TAPA].distancia <= UMBRAL_CM_A_TAPA_LLENO) 
-          && (sensores[SENSOR_PROXIMIDAD_TAPA].distancia >= 0)
-    && sensorInfrarrojo.estado == ESTADO_SENSOR_OFF
+  if (estadoBluetooth==ESTADO_SENSOR_OFF){
+    if( 
+        (sensores[SENSOR_PROXIMIDAD_TAPA].distancia <= UMBRAL_CM_A_TAPA_LLENO) &&
+        (sensores[SENSOR_PROXIMIDAD_TAPA].distancia >= 0) &&
+         sensorInfrarrojo.estado == ESTADO_SENSOR_OFF
 
     ) //tapa cerrada
     {
       evento.tipo  = TIPO_EVENTO_CAPACIDAD_TACHO_LLENO;
       evento.param1 = SENSOR_PROXIMIDAD_TAPA;
-            evento.param2 = cm;
+      evento.param2 = cm;
       
       sensores[SENSOR_PROXIMIDAD_TAPA].estado = ESTADO_SENSOR_ON;
       estadoBluetooth=ESTADO_SENSOR_ON;
@@ -436,7 +417,7 @@ if (estadoBluetooth==ESTADO_SENSOR_OFF){
       evento.tipo  = TIPO_EVENTO_CONTINUE;
       return false;
     }
-}
+  }
   
   
   return false;
@@ -449,20 +430,25 @@ bool verificarEstadoInfrarrojoTacho()
     
   if ( sensorInfrarrojo.estado == ESTADO_SENSOR_OFF ) //tapa cerrada previamente
   {
-    if(  sensorInfrarrojo.valor == HIGH && sensorInfrarrojo.valor_antiguo == LOW && sensorInfrarrojo.state == PRESENCIA_NO_DETECTADA 
-    &&  sensores[SENSOR_PROXIMIDAD_TAPA].estado == ESTADO_SENSOR_OFF && sensoresH[SENSOR_HUMEDAD].estado == ESTADO_SENSOR_OFF && estadoBluetooth==ESTADO_SENSOR_OFF) // no hay capacidad llena  y no hay humedad
+    if( sensorInfrarrojo.valor                  == HIGH                   &&
+        sensorInfrarrojo.valor_antiguo          == LOW                    &&
+        sensorInfrarrojo.state                  == PRESENCIA_NO_DETECTADA &&
+        sensores[SENSOR_PROXIMIDAD_TAPA].estado == ESTADO_SENSOR_OFF      &&
+        sensoresH[SENSOR_HUMEDAD].estado        == ESTADO_SENSOR_OFF      &&
+        estadoBluetooth                         == ESTADO_SENSOR_OFF
+      ) // no hay capacidad llena  y no hay humedad
     {
       evento.tipo  = TIPO_EVENTO_TAPA_ABIERTA;
       
-      sensorInfrarrojo.estado = ESTADO_SENSOR_ON;
-      sensorInfrarrojo.state = PRESENCIA_DETECTADA-sensorInfrarrojo.state;
+      sensorInfrarrojo.estado        = ESTADO_SENSOR_ON;
+      sensorInfrarrojo.state         = PRESENCIA_DETECTADA - sensorInfrarrojo.state;
       sensorInfrarrojo.valor_antiguo = sensorInfrarrojo.valor;
       return true;
     }
     else
       sensorInfrarrojo.valor_antiguo = sensorInfrarrojo.valor;
   } 
-    else if( sensorInfrarrojo.estado==ESTADO_SENSOR_ON) //tapa abierta previamente
+  else if( sensorInfrarrojo.estado==ESTADO_SENSOR_ON) //tapa abierta previamente
   {
     if( sensorInfrarrojo.valor == HIGH && sensorInfrarrojo.valor_antiguo == LOW & sensorInfrarrojo.state == PRESENCIA_DETECTADA )
     {
@@ -477,10 +463,7 @@ bool verificarEstadoInfrarrojoTacho()
       sensorInfrarrojo.valor_antiguo = sensorInfrarrojo.valor;
     
   }
-  
-  
   return false;
-
 }
 
 
@@ -497,7 +480,10 @@ void genera_evento( )
     lct   = ct;
     
     if ( 
-       (verificarEstadoInfrarrojoTacho() == true) || (verificarEstadoSensorUltrasonidoTapa() == true) || (verificarEstadoSensorHumedad() == true) || (verificarEstadoBluetooth() == true))     
+        (verificarEstadoInfrarrojoTacho() == true) ||
+        (verificarEstadoSensorUltrasonidoTapa() == true) || 
+        (verificarEstadoSensorHumedad() == true) || 
+        (verificarEstadoBluetooth() == true))     
     {
       return;
     }
@@ -595,9 +581,9 @@ void maquina_estados( )
       }
       break;
           
-            case TIPO_EVENTO_HAY_AGUA:
-            {
-              Serial.println("-----------------------------------------------------");
+      case TIPO_EVENTO_HAY_AGUA:
+      {
+        Serial.println("-----------------------------------------------------");
         Serial.println("Estado ESTADO_EMBEDDED_CERRADO...");
         Serial.println("Evento TIPO_EVENTO_HAY_AGUA...");
         Serial.println("-----------------------------------------------------");
@@ -607,7 +593,7 @@ void maquina_estados( )
         Serial.println("Ingrese 'a' para abrir el tacho y hacer el mantenimiento:");
 
                 
-      settings_data[0]='\0';
+        settings_data[0]='\0';
         strcpy(settings_data,"INICIAR_MANTENIMIENTO|\r");
         
         BT.write(settings_data);
