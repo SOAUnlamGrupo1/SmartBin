@@ -51,18 +51,21 @@ public class MainActivity extends Activity
 	//se crea un array de String con los permisos a solicitar en tiempo de ejecucion 
 	//Esto se debe realizar a partir de Android 6.0, ya que con verdiones anteriores
 	//con solo solicitarlos en el Manifest es suficiente
-	String[] permissions= new String[]{
-			Manifest.permission.BLUETOOTH,
-			Manifest.permission.BLUETOOTH_ADMIN,
-			Manifest.permission.ACCESS_COARSE_LOCATION,
-			Manifest.permission.WRITE_EXTERNAL_STORAGE,
-			Manifest.permission.READ_PHONE_STATE,
-			Manifest.permission.READ_EXTERNAL_STORAGE};
+	String[] permissions= new String[]
+									{
+										Manifest.permission.BLUETOOTH,
+										Manifest.permission.BLUETOOTH_ADMIN,
+										Manifest.permission.ACCESS_COARSE_LOCATION,
+										Manifest.permission.WRITE_EXTERNAL_STORAGE,
+										Manifest.permission.READ_PHONE_STATE,
+										Manifest.permission.READ_EXTERNAL_STORAGE
+									};
 
 
 	@Override
 	//Metodo On create
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_main);
@@ -140,8 +143,10 @@ public class MainActivity extends Activity
 	public void onPause()
 	{
 
-		if (mBluetoothAdapter != null) {
-			if (mBluetoothAdapter.isDiscovering()) {
+		if (mBluetoothAdapter != null)
+		{
+			if (mBluetoothAdapter.isDiscovering())
+			{
 				mBluetoothAdapter.cancelDiscovery();
 			}
 		}
@@ -152,13 +157,15 @@ public class MainActivity extends Activity
 	@Override
 	//Cuando se detruye la Acivity se quita el registro de los brodcast. Apartir de este momento no se
 	//recibe mas broadcast del SO. del bluethoot
-	public void onDestroy() {
+	public void onDestroy()
+	{
 		unregisterReceiver(mReceiver);
 
 		super.onDestroy();
 	}
 
-	private void showEnabled() {
+	private void showEnabled()
+	{
 		txtEstado.setText("Bluetooth Habilitado");
 		txtEstado.setTextColor(Color.BLUE);
 
@@ -169,7 +176,8 @@ public class MainActivity extends Activity
 		btnBuscar.setEnabled(true);
 	}
 
-	private void showDisabled() {
+	private void showDisabled()
+	{
 		txtEstado.setText("Bluetooth Deshabilitado");
 		txtEstado.setTextColor(Color.RED);
 
@@ -180,7 +188,8 @@ public class MainActivity extends Activity
 		btnBuscar.setEnabled(false);
 	}
 
-	private void showUnsupported() {
+	private void showUnsupported()
+	{
 		txtEstado.setText("Bluetooth no es soportado por el dispositivo movil");
 
 		btnActivar.setText("Activar");
@@ -190,13 +199,16 @@ public class MainActivity extends Activity
 		btnBuscar.setEnabled(false);
 	}
 
-	private void showToast(String message) {
+	private void showToast(String message)
+	{
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 	}
 
 	//Handler que captura los brodacast que emite el SO al ocurrir los eventos del bluethoot
-	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-		public void onReceive(Context context, Intent intent) {
+	private final BroadcastReceiver mReceiver = new BroadcastReceiver()
+	{
+		public void onReceive(Context context, Intent intent)
+		{
 
 			//Atraves del Intent obtengo el evento de Bluethoot que informo el broadcast del SO
 			String action = intent.getAction();
@@ -252,9 +264,11 @@ public class MainActivity extends Activity
 
 
 	//Metodo que actua como Listener de los eventos que ocurren en los componentes graficos de la activty
-	private View.OnClickListener btnEmparejarListener = new View.OnClickListener() {
+	private View.OnClickListener btnEmparejarListener = new View.OnClickListener()
+	{
 		@Override
-		public void onClick(View v) {
+		public void onClick(View v)
+		{
 
 			Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 
@@ -277,22 +291,29 @@ public class MainActivity extends Activity
 		}
 	};
 
-	private View.OnClickListener btnBuscarListener = new View.OnClickListener() {
+	private View.OnClickListener btnBuscarListener = new View.OnClickListener()
+	{
 		@Override
-		public void onClick(View v) {
+		public void onClick(View v)
+		{
 			mBluetoothAdapter.startDiscovery();
 		}
 	};
 
 
-	private View.OnClickListener btnActivarListener = new View.OnClickListener() {
+	private View.OnClickListener btnActivarListener = new View.OnClickListener()
+	{
 		@Override
-		public void onClick(View v) {
-			if (mBluetoothAdapter.isEnabled()) {
+		public void onClick(View v)
+		{
+			if (mBluetoothAdapter.isEnabled())
+			{
 				mBluetoothAdapter.disable();
 
 				showDisabled();
-			} else {
+			}
+			else
+			{
 				Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 
 				startActivityForResult(intent, 1000);
@@ -301,9 +322,11 @@ public class MainActivity extends Activity
 	};
 
 
-	private DialogInterface.OnClickListener btnCancelarDialogListener = new DialogInterface.OnClickListener() {
+	private DialogInterface.OnClickListener btnCancelarDialogListener = new DialogInterface.OnClickListener()
+	{
 		@Override
-		public void onClick(DialogInterface dialog, int which) {
+		public void onClick(DialogInterface dialog, int which)
+		{
 			dialog.dismiss();
 
 			mBluetoothAdapter.cancelDiscovery();
@@ -312,23 +335,28 @@ public class MainActivity extends Activity
 
 
 	//Metodo que chequea si estan habilitados los permisos
-	private  boolean checkPermissions() {
+	private  boolean checkPermissions()
+	{
 		int result;
 		List<String> listPermissionsNeeded = new ArrayList<>();
 
 		//Se chequea si la version de Android es menor a la 6
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+		{
 			return true;
 		}
 
 
-		for (String p:permissions) {
+		for (String p:permissions)
+		{
 			result = ContextCompat.checkSelfPermission(this,p);
-			if (result != PackageManager.PERMISSION_GRANTED) {
+			if (result != PackageManager.PERMISSION_GRANTED)
+			{
 				listPermissionsNeeded.add(p);
 			}
 		}
-		if (!listPermissionsNeeded.isEmpty()) {
+		if (!listPermissionsNeeded.isEmpty())
+		{
 			ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),MULTIPLE_PERMISSIONS );
 			return false;
 		}
@@ -336,15 +364,20 @@ public class MainActivity extends Activity
 	}
 
 	@Override
-	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-		switch (requestCode) {
-			case MULTIPLE_PERMISSIONS: {
-				if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+	{
+		switch (requestCode)
+		{
+			case MULTIPLE_PERMISSIONS:
+				{
+				if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+				{
 					// permissions granted.
 					enableComponent(); // Now you call here what ever you want :)
 				} else {
 					String perStr = "";
-					for (String per : permissions) {
+					for (String per : permissions)
+					{
 						perStr += "\n" + per;
 					}
 					// permissions list of don't granted permission

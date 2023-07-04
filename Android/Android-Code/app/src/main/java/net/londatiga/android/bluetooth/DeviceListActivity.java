@@ -63,40 +63,50 @@ public class DeviceListActivity extends Activity
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy()
+    {
         unregisterReceiver(mPairReceiver);
 
         super.onDestroy();
     }
 
 
-    private void showToast(String message) {
+    private void showToast(String message)
+    {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private void pairDevice(BluetoothDevice device) {
-        try {
+    private void pairDevice(BluetoothDevice device)
+    {
+        try
+        {
             Method method = device.getClass().getMethod("createBond", (Class[]) null);
             method.invoke(device, (Object[]) null);
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
-    private void unpairDevice(BluetoothDevice device) {
-        try {
+    private void unpairDevice(BluetoothDevice device)
+    {
+        try
+        {
             Method method = device.getClass().getMethod("removeBond", (Class[]) null);
             method.invoke(device, (Object[]) null);
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
     //Metodo que actua como Listener de los eventos que ocurren en los componentes graficos de la activty
-    private DeviceListAdapter.OnPairButtonClickListener listenerBotonEmparejar = new DeviceListAdapter.OnPairButtonClickListener() {
+    private DeviceListAdapter.OnPairButtonClickListener listenerBotonEmparejar = new DeviceListAdapter.OnPairButtonClickListener()
+    {
         @Override
-        public void onPairButtonClick(int position) {
+        public void onPairButtonClick(int position)
+        {
            //Obtengo los datos del dispostivo seleccionado del listview por el usuario
             BluetoothDevice device = mDeviceList.get(position);
 
@@ -119,8 +129,10 @@ public class DeviceListActivity extends Activity
     };
 
     //Handler que captura los brodacast que emite el SO al ocurrir los eventos del bluethoot
-    private final BroadcastReceiver mPairReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
+    private final BroadcastReceiver mPairReceiver = new BroadcastReceiver()
+    {
+        public void onReceive(Context context, Intent intent)
+        {
 
             //Atraves del Intent obtengo el evento de Bluethoot que informo el broadcast del SO
             String action = intent.getAction();

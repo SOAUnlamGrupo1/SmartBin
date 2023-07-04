@@ -72,7 +72,6 @@ public class activity_comunicacion extends Activity implements SensorEventListen
         txtValorLiquido=(TextView)findViewById(R.id.txtValorLiquido);
         txtValorLleno=(TextView)findViewById(R.id.txtValorLleno);
         txtValorMantenimiento=(TextView)findViewById(R.id.txtValorMantenimiento);
-        //txtValorHumedad=(TextView)findViewById(R.id.txtValorHumedad);
         txtValorCapacidad=(TextView)findViewById(R.id.txtValorCapacidad);
         ivStatus = findViewById(R.id.ivStatus);
         txtEstadoGeneral=(TextView)findViewById(R.id.txtEstadoGeneral);
@@ -96,7 +95,8 @@ public class activity_comunicacion extends Activity implements SensorEventListen
     @Override
     //Cada vez que se detecta el evento OnResume se establece la comunicacion con el HC05, creando un
     //socketBluethoot
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
         Ini_Sensores();
 
@@ -185,7 +185,8 @@ public class activity_comunicacion extends Activity implements SensorEventListen
     }
 
     //Metodo que crea el socket bluethoot
-    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
+    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException
+    {
 
         return  device.createRfcommSocketToServiceRecord(BTMODULEUUID);
     }
@@ -202,46 +203,53 @@ public class activity_comunicacion extends Activity implements SensorEventListen
                     //voy concatenando el msj
                     String readMessage = (String) msg.obj;
                     recDataString.append(readMessage);
-                    int endOfLineIndex = recDataString.indexOf("\r"); //ASI PROBAR CON PUTTY
-                    //int endOfLineIndex = recDataString.indexOf("\r\n"); // ASI USAR CON ARDUINO POSTA
+                    int endOfLineIndex = recDataString.indexOf("\r");
 
                     //cuando recibo toda una linea la muestro en el layout
-                    if (endOfLineIndex > 0) {
+                    if (endOfLineIndex > 0)
+                    {
                         String msj = recDataString.substring(0, recDataString.indexOf("\r"));
 
                         String vector[] = msj.split("\\|");
 
-                        for (int i = 0; i < vector.length; i++) {
+                        for (int i = 0; i < vector.length; i++)
+                        {
 
-                            if (vector[i].contains("ABIERTO")) {
+                            if (vector[i].contains("ABIERTO"))
+                            {
                                 String dataInPrint = vector[i].substring(vector[i].indexOf(":") + 1, vector[i].length()); //si o NO
                                 txtValorTapa.setText(dataInPrint);
                             }
-                            else if (vector[i].contains("LIQUIDO")) {
+                            else if (vector[i].contains("LIQUIDO"))
+                            {
                                 String dataInPrint = vector[i].substring(vector[i].indexOf(":")+1, vector[i].length()); //si o NO
                                 txtValorLiquido.setText(dataInPrint);
                             }
-                            else if (vector[i].contains("LLENO")) {
+                            else if (vector[i].contains("LLENO"))
+                            {
                                 String dataInPrint = vector[i].substring(vector[i].indexOf(":")+1, vector[i].length()); //si o NO
                                 txtValorLleno.setText(dataInPrint);
                             }
 
-                            else if (vector[i].contains("INICIAR_MANTENIMIENTO")) { //habilita boton iniciar mantenimiento
+                            else if (vector[i].contains("INICIAR_MANTENIMIENTO"))
+                            { //habilita boton iniciar mantenimiento
                                 btnEncender.setEnabled(true);
                                 ivStatus.setImageResource(R.drawable.error);
                                 txtEstadoGeneral.setText("ESTADO: EN MANTENIMIENTO");
                             }
-                            else if (vector[i].contains("FINALIZAR_MANTENIMIENTO")) { //habilita boton finalizar mantenimiento
-                                //btnEncender.setEnabled(false);
+                            else if (vector[i].contains("FINALIZAR_MANTENIMIENTO"))
+                            { //habilita boton finalizar mantenimiento
                                 btnApagar.setEnabled(true);
                             }
                             else if (vector[i].contains("MANTENIMIENTO") &&
                                     !(vector[i].contains("INICIAR_MANTENIMIENTO")) &&
-                                    !(vector[i].contains("FINALIZAR_MANTENIMIENTO"))) {
+                                    !(vector[i].contains("FINALIZAR_MANTENIMIENTO")))
+                            {
                                 String dataInPrint = vector[i].substring(vector[i].indexOf(":")+1, vector[i].length()); //si o NO
                                 txtValorMantenimiento.setText(dataInPrint);
                             }
-                            else if (vector[i].contains("CAPACIDAD")) {
+                            else if (vector[i].contains("CAPACIDAD"))
+                            {
                                 String dataInPrint = vector[i].substring(vector[i].indexOf(":")+1, vector[i].length()); //si o NO
                                 txtValorCapacidad.setText("CAPACIDAD AL "+dataInPrint+" %");
                             }
@@ -250,67 +258,6 @@ public class activity_comunicacion extends Activity implements SensorEventListen
                         }
                         recDataString.delete(0, recDataString.length());
                     }
-/*
-                        if (recDataString.toString().contains("ABIERTO|")) {
-                            String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
-                            txtValorTapa.setText(dataInPrint);
-
-                            recDataString.delete(0, recDataString.length());
-                        }
-                        else if (recDataString.toString().contains("LIQUIDO|")) {
-                            String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
-                            txtValorLiquido.setText(dataInPrint);
-
-                             recDataString.delete(0, recDataString.length());
-                        }
-                        else if (recDataString.toString().contains("LLENO|")) {
-                            String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
-                            txtValorLleno.setText(dataInPrint);
-
-                            recDataString.delete(0, recDataString.length());
-                        }
-                        else if (recDataString.toString().contains("MANTENIMIENTO|")) {
-                            String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
-                            txtValorMantenimiento.setText(dataInPrint);
-
-                            recDataString.delete(0, recDataString.length());
-                        }
-                        */
-                        /*else if (recDataString.toString().contains("HUMEDAD|")) {
-                            String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
-                            txtValorHumedad.setText("HUMEDAD "+dataInPrint+" %");
-
-                            recDataString.delete(0, recDataString.length());
-                        }*/
-                        /*
-                        else if (recDataString.toString().contains("CAPACIDAD|")) {
-                            String dataInPrint = recDataString.substring(recDataString.indexOf("|")+1, recDataString.indexOf("\r")); //si o NO
-                            txtValorCapacidad.setText("CAPACIDAD AL "+dataInPrint+" %");
-
-                             recDataString.delete(0, recDataString.length());
-                        }
-                        else if (recDataString.toString().contains("INICIAR_MANTENIMIENTO")) { //habilita boton iniciar mantenimiento
-                            btnEncender.setEnabled(true);
-                            ivStatus.setImageResource(R.drawable.error);
-                            txtEstadoGeneral.setText("ESTADO: EN MANTENIMIENTO");
-                             recDataString.delete(0, recDataString.length());
-                        }
-                        else if (recDataString.toString().contains("FINALIZAR_MANTENIMIENTO")) { //habilita boton finalizar mantenimiento
-                            //btnEncender.setEnabled(false);
-                            btnApagar.setEnabled(true);
-
-                            recDataString.delete(0, recDataString.length());
-                        }
-
-                        else {
-                            //String dataInPrint = recDataString.substring(0, endOfLineIndex);
-                           // txtPotenciometro.setText(dataInPrint);
-
-                            recDataString.delete(0, recDataString.length());
-                        }
-                        */
-
-
 
                 }
             }
@@ -319,21 +266,24 @@ public class activity_comunicacion extends Activity implements SensorEventListen
     }
 
     //Listener del boton encender que envia  msj para enceder Led a Arduino atraves del Bluethoot
-    private View.OnClickListener btnEncenderListener = new View.OnClickListener() {
+    private View.OnClickListener btnEncenderListener = new View.OnClickListener()
+    {
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             mConnectedThread.write("a");    // Send "1" via Bluetooth
             showToast("Se abre la tapa");
             btnEncender.setEnabled(false);
-            //btnApagar.setEnabled(true);
         }
     };
 
 
     //Listener del boton encender que envia  msj para Apagar Led a Arduino atraves del Bluethoot
-    private View.OnClickListener btnApagarListener = new View.OnClickListener() {
+    private View.OnClickListener btnApagarListener = new View.OnClickListener()
+    {
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             mConnectedThread.write("b");    // Send "0" via Bluetooth
             showToast("Se cierra la tapa");
             btnApagar.setEnabled(false);
@@ -343,7 +293,8 @@ public class activity_comunicacion extends Activity implements SensorEventListen
     };
 
 
-    private void showToast(String message) {
+    private void showToast(String message)
+    {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
     // Metodo que escucha el cambio de los sensores
@@ -358,20 +309,25 @@ public class activity_comunicacion extends Activity implements SensorEventListen
         super.onStop();
     }
     @Override
-    public void onSensorChanged(SensorEvent event) {
+    public void onSensorChanged(SensorEvent event)
+    {
         String txt = "";
 
         // Cada sensor puede lanzar un thread que pase por aqui
         // Para asegurarnos ante los accesos simult�neos sincronizamos esto
 
-        synchronized (this) {
+        synchronized (this)
+        {
             Log.d("sensor", event.sensor.getName());
 
-            switch (event.sensor.getType()) {
+            switch (event.sensor.getType())
+            {
                 case Sensor.TYPE_ACCELEROMETER:
-                    if ((event.values[0] > 15) || (event.values[1] > 15) || (event.values[2] > 15)) {
+                    if ((event.values[0] > 15) || (event.values[1] > 15) || (event.values[2] > 15))
+                    {
                         Toast.makeText(this, "Se ha cambiado el fondo de pantalla", Toast.LENGTH_SHORT).show();
-                        if (fondo_original == true) {
+                        if (fondo_original == true)
+                        {
                             getWindow().getDecorView().setBackgroundColor(Color.LTGRAY);
                             fondo_original = false;
                         }
@@ -398,7 +354,8 @@ public class activity_comunicacion extends Activity implements SensorEventListen
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
+    public void onAccuracyChanged(Sensor sensor, int i)
+    {
 
     }
 
@@ -421,7 +378,10 @@ public class activity_comunicacion extends Activity implements SensorEventListen
                 //Create I/O streams for connection
                 tmpIn = socket.getInputStream();
                 tmpOut = socket.getOutputStream();
-            } catch (IOException e) { }
+            } catch (IOException e)
+            {
+
+            }
 
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
@@ -445,7 +405,8 @@ public class activity_comunicacion extends Activity implements SensorEventListen
                      //se muestran en el layout de la activity, utilizando el handler del hilo
                     // principal antes mencionado
                     bluetoothIn.obtainMessage(handlerState, bytes, -1, readMessage).sendToTarget();
-                } catch (IOException e) {
+                } catch (IOException e)
+                {
                     break;
                 }
             }
@@ -453,11 +414,14 @@ public class activity_comunicacion extends Activity implements SensorEventListen
 
 
         //write method
-        public void write(String input) {
+        public void write(String input)
+        {
             byte[] msgBuffer = input.getBytes();           //converts entered String into bytes
-            try {
+            try
+            {
                 mmOutStream.write(msgBuffer);                //write bytes over BT connection via outstream
-            } catch (IOException e) {
+            } catch (IOException e)
+            {
                 //if you cannot write, close the application
                 showToast("La conexion fallo");
                 finish();
