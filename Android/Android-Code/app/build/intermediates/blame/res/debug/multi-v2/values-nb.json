@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Administrator\\Desktop\\Android-Code\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-nb\\values-nb.xml",
+            "outputFile": "/home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-nb/values-nb.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\698aa02e3959bee2f479105d3676ed74\\res\\values-nb\\values-nb.xml",
+                    "source": "/home/gonzalo/.gradle/caches/transforms-2/files-2.1/5b08443b45a62c6724c0154ce0068a88/res/values-nb/values-nb.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

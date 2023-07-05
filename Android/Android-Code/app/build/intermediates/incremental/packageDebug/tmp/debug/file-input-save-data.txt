@@ -1,6 +1,6 @@
 #Internal package file, do not edit.
-#Tue Jun 20 03:29:55 ART 2023
-0.base=C\:\\Users\\Administrator\\Desktop\\Android-Code\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out
+#Tue Jul 04 20:30:47 ART 2023
+0.base=/home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/build/intermediates/dex/debug/mergeDexDebug/out
 0.path=classes.dex
 count=1
 0.baseType=DIRECTORY
