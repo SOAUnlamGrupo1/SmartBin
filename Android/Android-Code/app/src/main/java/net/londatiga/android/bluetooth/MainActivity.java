@@ -49,16 +49,12 @@ public class MainActivity extends Activity
 	public static final int MULTIPLE_PERMISSIONS = 10; // code you want.
 
 	//se crea un array de String con los permisos a solicitar en tiempo de ejecucion 
-	//Esto se debe realizar a partir de Android 6.0, ya que con verdiones anteriores
+	//Esto se debe realizar a partir de Android 6.0, ya que con versiones anteriores
 	//con solo solicitarlos en el Manifest es suficiente
 	String[] permissions= new String[]
 									{
 										Manifest.permission.BLUETOOTH,
 										Manifest.permission.BLUETOOTH_ADMIN,
-										Manifest.permission.ACCESS_COARSE_LOCATION,
-										Manifest.permission.WRITE_EXTERNAL_STORAGE,
-										Manifest.permission.READ_PHONE_STATE,
-										Manifest.permission.READ_EXTERNAL_STORAGE
 									};
 
 

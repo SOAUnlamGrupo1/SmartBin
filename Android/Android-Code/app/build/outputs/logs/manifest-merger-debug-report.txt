@@ -37,22 +37,6 @@ uses-permission#android.permission.BLUETOOTH_ADMIN
 ADDED from /home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/src/main/AndroidManifest.xml:8:5-74
 	android:name
 		ADDED from /home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/src/main/AndroidManifest.xml:8:22-71
-uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from /home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/src/main/AndroidManifest.xml:9:5-81
-	android:name
-		ADDED from /home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/src/main/AndroidManifest.xml:9:22-78
-uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from /home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/src/main/AndroidManifest.xml:10:5-81
-	android:name
-		ADDED from /home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/src/main/AndroidManifest.xml:10:22-78
-uses-permission#android.permission.READ_PHONE_STATE
-ADDED from /home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/src/main/AndroidManifest.xml:11:5-75
-	android:name
-		ADDED from /home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/src/main/AndroidManifest.xml:11:22-72
-uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from /home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/src/main/AndroidManifest.xml:12:5-80
-	android:name
-		ADDED from /home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/src/main/AndroidManifest.xml:12:22-77
 application
 ADDED from /home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/src/main/AndroidManifest.xml:14:5-42:19
 MERGED from [com.android.support:support-v4:26.1.0] /home/gonzalo/.gradle/caches/transforms-2/files-2.1/fea5d661fa2c891fd3e5f786e402753a/AndroidManifest.xml:25:5-29:19

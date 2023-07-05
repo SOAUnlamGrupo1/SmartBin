@@ -1,4 +1,4 @@
-#Tue Jul 04 20:30:47 ART 2023
+#Tue Jul 04 21:35:28 ART 2023
 base.0=/home/gonzalo/Desktop/Repo/SmartBin/Android/Android-Code/app/build/intermediates/dex/debug/mergeDexDebug/out
 renamed.0=classes.dex
 path.0=classes.dex

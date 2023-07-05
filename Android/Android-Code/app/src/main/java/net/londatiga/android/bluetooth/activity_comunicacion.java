@@ -265,7 +265,7 @@ public class activity_comunicacion extends Activity implements SensorEventListen
 
     }
 
-    //Listener del boton encender que envia  msj para enceder Led a Arduino atraves del Bluethoot
+    //Listener del boton encender que envia  msj para abrir tapa a Arduino atraves del Bluethoot
     private View.OnClickListener btnEncenderListener = new View.OnClickListener()
     {
         @Override
@@ -278,7 +278,7 @@ public class activity_comunicacion extends Activity implements SensorEventListen
     };
 
 
-    //Listener del boton encender que envia  msj para Apagar Led a Arduino atraves del Bluethoot
+    //Listener del boton encender que envia  msj para cerrar la tapa a Arduino atraves del Bluethoot
     private View.OnClickListener btnApagarListener = new View.OnClickListener()
     {
         @Override
