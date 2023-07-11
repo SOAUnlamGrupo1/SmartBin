@@ -67,10 +67,11 @@ public class DeviceListAdapter extends BaseAdapter
 			holder.pairBtn		= (Button) convertView.findViewById(R.id.btn_pair);
 			
 			convertView.setTag(holder);
-		} else
-			{
+		}
+		else
+		{
 				holder = (ViewHolder) convertView.getTag();
-			}
+		}
 		
 		BluetoothDevice device	= mData.get(position);
 		

@@ -194,7 +194,8 @@ public class activity_comunicacion extends Activity implements SensorEventListen
     //Handler que sirve que permite mostrar datos en el Layout al hilo secundario
     private Handler Handler_Msg_Hilo_Principal ()
     {
-        return new Handler() {
+        return new Handler()
+        {
             public void handleMessage(android.os.Message msg)
             {
                 //si se recibio un msj del hilo secundario
